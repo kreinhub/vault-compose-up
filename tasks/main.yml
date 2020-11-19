@@ -1,0 +1,49 @@
+---
+# tasks file for test-role-1
+---
+- name: Ingress | Setup and run ingress
+  become: yes
+  become_method: sudo
+  block:
+    - name: Create target directory
+      file: 
+        path: "{{ dest_path }}"
+        state: directory 
+        mode: '0755'
+
+    - name: Copy compose file and volumes to target host
+      copy:
+        src: "{{ item }}"
+        dest: "{{ dest_path }}"
+        owner: deploy
+        group: deploy
+        mode: 0644
+      with_items:
+        - "{{ role_path }}/files/{{ role_name }}.yaml"
+        - ""
+
+    - name: Log into DockerHub
+      docker_login:
+        registry: "{{ docker_registry.url }}"
+        username: "{{ docker_registry.user }}"
+        password: "{{ docker_registry.password }}" 
+
+    - name: Stop ingress container if they run
+      community.general.docker_compose:
+        project_src: "{{ dest_path }}"
+        files: "{{ role_name }}.yaml"
+        project_name: "{{ project_name }}"
+        remove_orphans: yes
+        stopped: yes
+      tags:
+        - molecule-idempotence-notest
+
+    - name: Deploy ingress from a compose file
+      community.general.docker_compose:
+        project_src: "{{ dest_path }}"
+        files: "{{ role_name }}.yaml"
+        recreate: always
+      tags:
+        - molecule-idempotence-notest
+
+
