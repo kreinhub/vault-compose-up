@@ -11,6 +11,15 @@
         state: directory 
         mode: '0755'
 
+    # - name: Template a compose files to dest_path on target host
+    #   template:
+    #     src: "{{ role_path }}/templates/docker-compose.yml.j2"
+    #     dest: "{{ dest_path }}/{{ project_name }}.yaml"
+    #     # dest: "{{ dest_path }}/{{ role_name }}.yaml"
+    #     owner: deploy
+    #     group: deploy
+    #     mode: '0644'
+
     - name: Copy compose file and volumes to target host
       copy:
         src: "{{ item }}"
