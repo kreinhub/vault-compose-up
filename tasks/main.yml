@@ -27,7 +27,7 @@
         username: "{{ docker_registry.user }}"
         password: "{{ docker_registry.password }}" 
 
-    - name: Stop ingress container if they run
+    - name: Stop vault container if it runs
       community.general.docker_compose:
         project_src: "{{ dest_path }}"
         files: "{{ role_name }}.yaml"
@@ -37,7 +37,7 @@
       tags:
         - molecule-idempotence-notest
 
-    - name: Deploy ingress from a compose file
+    - name: Deploy vault from a compose file
       community.general.docker_compose:
         project_src: "{{ dest_path }}"
         files: "{{ role_name }}.yaml"
