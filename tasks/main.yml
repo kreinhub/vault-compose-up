@@ -18,9 +18,8 @@
         owner: deploy
         group: deploy
         mode: 0644
-      with_items:
-        - "{{ role_path }}/files/{{ role_name }}.yaml"
-        - ""
+      with_fileglob:
+        - "{{ role_path }}/files/*"
 
     - name: Log into DockerHub
       docker_login:

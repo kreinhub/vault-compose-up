@@ -1,2 +1,21 @@
 ---
-# defaults file for test-role-1
+docker_registry:
+  url: "{{ lookup('env', 'CI_REGISTRY') | default('registry.gitlab.com', true) }}"
+  # user: "{{ lookup('env', 'CI_JOB_USER') | default('vagrant_molecule', true) }}"
+  user: "{{ lookup('env', 'CI_REGISTRY_USER') | default('vagrant_molecule', true) }}"
+  password: "{{ lookup('env', 'CI_JOB_TOKEN') | default(lookup('env','VAGRANT_TOKEN'), true) }}"
+
+project_name: "{{ lookup('env', 'CI_PROJECT_NAME') | default('lms', true) }}-{{ lookup('env', 'CI_COMMIT_REF_SLUG') | default('dev', true) }}"
+dest_path: "/var/www/"
+image_name: "{{ docker_registry.url  }}/{{ lookup('env','CI_PROJECT_PATH') | default('otus6/projects',true) }}/{{lookup('env','CI_PROJECT_NAME') | default('lms', true) }}-web:{{lookup('env','CI_COMMIT_REF_SLUG') | default('dev', true) }}"
+virtual_host: "{{ lookup('env','CI_COMMIT_REF_SLUG') | default('dev', true) }}.web.{{ lookup('env','DEPLOY_DOMAIN') | default('localhost', true) }}"
+new_role_name: "{{ role_name }}"
+
+#---
+#docker_registry:
+#  url: "{{ lookup('env', 'CI_REGISTRY') | default('https://gitlab.com/otus6/projects/lms/container_registry') }}"
+#  user: "{{ lookup('env', 'CI_REGISTRY_USER') | default() }}"  
+#  password: "{{ lookup('env', 'CI_JOB_TOKEN') | default() }}"
+
+#project_name: "{{ lookup('env', 'CI_PROJECT_NAME') }}-{{ lookup('env', 'CI_COMMIT_REF_SLUG') }}"
+#dest_path: "/var/www/"
