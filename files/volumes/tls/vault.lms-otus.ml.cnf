@@ -124,7 +124,7 @@ x509_extensions	= v3_ca	# The extensions to add to the self signed cert
 # WARNING: ancient versions of Netscape crash on BMPStrings or UTF8Strings.
 string_mask = utf8only
 
-# req_extensions = v3_req # The extensions to add to a certificate request
+req_extensions = v3_req # The extensions to add to a certificate request
 
 [ req_distinguished_name ]
 countryName			= Country Name (2 letter code)
@@ -217,25 +217,30 @@ authorityKeyIdentifier=keyid,issuer
 # extendedKeyUsage = critical,timeStamping
 
 [ v3_req ]
-
-# Extensions to add to a certificate request
-
 basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+#extendedKeyUsage=serverAuth
+subjectAltName = @alt_names
+
+# Extensions to add to a certificate request
+[ alt_names ]
+DNS.1 = key-vault.sandbox.net
+DNS.2 = *.key-vault.sandbox.net
+
 
 [ v3_ca ]
-
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer
+basicConstraints = critical, CA:TRUE, pathlen:3
+keyUsage = critical, cRLSign, keyCertSign
+nsCertType = sslCA, emailCA
 
 # Extensions for a typical CA
 
 
 # PKIX recommendation.
 
-subjectKeyIdentifier=hash
 
-authorityKeyIdentifier=keyid:always,issuer
-
-basicConstraints = critical,CA:true
 
 # Key usage: this is typical for a CA certificate. However since it will
 # prevent it being used as an test self-signed certificate it is best

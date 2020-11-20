@@ -1,10 +1,6 @@
 Role Name
 =========
 
-TODO:
-1. Запилить серты
-2. ПОдготовить юзера deploy на инстансе
-
 A brief description of the role goes here.
 
 Requirements
