@@ -8,8 +8,8 @@
   "listener": {
     "tcp":{
       "address": "0.0.0.0:8200",
-      "tls_cert_file": "{{ lookup('env', 'VAULT_CLIENT_CERT') }}",
-      "tls_key_file": "{{ lookup('env', 'VAULT_CLIENT_KEY') }}",
+      "tls_cert_file": "{{ lookup('env', 'VAULT_SERVER_CERT') }}",
+      "tls_key_file": "{{ lookup('env', 'VAULT_SERVER_KEY') }}",
       "tls_enable": "true"
     }
   },
