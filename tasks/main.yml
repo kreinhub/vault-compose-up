@@ -29,7 +29,7 @@
         mode: '0644'
       with_items:
         - { name: "vault-compose-up.yaml", dest: "{{ dest_path }}" }
-        - { name: "vault.json", dest: "{{ dest_path }}/volumes/config/" }
+        - { name: "vault.json", dest: "{{ dest_path }}/volumes/config" }
 
     - name: Log into DockerHub
       docker_login:

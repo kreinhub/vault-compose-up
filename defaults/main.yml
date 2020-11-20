@@ -5,7 +5,7 @@ docker_registry:
   password: "{{ lookup('env', 'CI_JOB_TOKEN') | default(lookup('env','VAGRANT_TOKEN'), true) }}"
 
 project_name: "{{ lookup('env', 'CI_PROJECT_NAME') | default('lms', true) }}-{{ lookup('env', 'CI_COMMIT_REF_SLUG') | default('dev', true) }}-{{ lookup('env','CI_JOB_STAGE') | default('web', true) }}"
-dest_path: "/var/www/"
+dest_path: "/var/www"
 
 # image_name: "{{ docker_registry.url  }}/{{ lookup('env','CI_PROJECT_PATH') | default('otus6/projects/lms',true) }}/{{lookup('env','CI_PROJECT_NAME') | default('lms', true) }}-{{ lookup('env','CI_JOB_STAGE') | default('web', true) }}:{{lookup('env','CI_COMMIT_REF_SLUG') | default('dev', true) }}"
 # virtual_host: "{{ lookup('env','CI_COMMIT_REF_SLUG') | default('dev', true) }}.{{ lookup('env','CI_JOB_STAGE') | default('web', true) }}.{{ lookup('env','DEPLOY_DOMAIN') | default('localhost', true) }}"
