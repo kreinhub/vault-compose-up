@@ -4,11 +4,20 @@
   become: yes
   become_method: sudo
   block:
-    - name: Create target directory
+    - name: Create target directories
       file: 
-        path: "{{ dest_path }}"
+        path: "{{ item }}"
         state: directory 
         mode: '0755'
+        group: deploy
+        owner: deploy
+      with_items:
+        - "{{ dest_path }}"
+        - "{{ dest_path }}/volumes"
+        - "{{ dest_path }}/volumes/file"
+        - "{{ dest_path }}/volumes/config"
+        - "{{ dest_path }}/volumes/tls"
+        - "{{ dest_path }}/volumes/logs"
 
     - name: Copy volumes to target host
       copy:
