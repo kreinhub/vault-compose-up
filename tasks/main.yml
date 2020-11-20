@@ -1,6 +1,6 @@
 ---
 # tasks file for vault-compose-up
-- name: Ingress | Setup and run ingress
+- name: Vault | Setup and run vault
   become: yes
   become_method: sudo
   block:
@@ -29,7 +29,7 @@
       with_fileglob:
         - "{{ role_path }}/files/*"
 
-    - name: Template a compose files to dest_path on target host
+    - name: Template compose file and vault config to their destinations on target host
       template:
         src: "{{ role_path }}/templates/{{ item.name }}.j2"
         dest: "{{ item.dest }}/{{ item.name }}"
