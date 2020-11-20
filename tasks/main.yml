@@ -4,30 +4,18 @@
   become: yes
   become_method: sudo
   block:
-    - name: Create target directories
+    - name: Create target directory '/var/www'
       file: 
-        path: "{{ item }}"
+        path: "{{ dest_path }}"
         state: directory 
         mode: '0755'
         group: deploy
         owner: deploy
-      with_items:
-        - "{{ dest_path }}"
-        - "{{ dest_path }}/volumes"
-        - "{{ dest_path }}/volumes/file"
-        - "{{ dest_path }}/volumes/config"
-        - "{{ dest_path }}/volumes/tls"
-        - "{{ dest_path }}/volumes/logs"
 
-    - name: Copy volumes to target host
+    - name: Copy all role files to target
       copy:
-        src: "{{ item }}"
+        src: ./
         dest: "{{ dest_path }}"
-        owner: deploy
-        group: deploy
-        mode: 0644
-      with_fileglob:
-        - "{{ role_path }}/files/*"
 
     - name: Template compose file and vault config to their destinations on target host
       template:
