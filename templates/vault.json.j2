@@ -1,5 +1,5 @@
 { 
-  "api_addr": "https://key-vault.sandbox.net:8200",
+  "api_addr": "{{ lookup('env', 'VAULT_ADDR') }}",
   "backend": {
     "file": {
       "path": "/vault/file"
@@ -8,8 +8,8 @@
   "listener": {
     "tcp":{
       "address": "0.0.0.0:8200",
-      "tls_cert_file": "/vault/tls/key-vault.sandbox.net.crt",
-      "tls_key_file": "/vault/tls/key-vault.sandbox.net.key.pem",
+      "tls_cert_file": "{{ lookup('env', 'VAULT_CLIENT_CERT') }}",
+      "tls_key_file": "{{ lookup('env', 'VAULT_CLIENT_KEY') }}",
       "tls_enable": "true"
     }
   },
