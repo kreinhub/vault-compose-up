@@ -11,7 +11,7 @@
         state: directory 
         mode: '0755'
 
-    - name: Copy compose file and volumes to target host
+    - name: Copy volumes to target host
       copy:
         src: "{{ item }}"
         dest: "{{ dest_path }}"
@@ -25,13 +25,11 @@
       template:
         src: "{{ role_path }}/templates/{{ item.name }}.j2"
         dest: "{{ item.dest }}/{{ item.name }}"
-        # dest: "{{ item.dest }}/{{ project_name }}.yaml"
-        # dest: "{{ dest_path }}/{{ role_name }}.yaml"
         owner: deploy
         group: deploy
         mode: '0644'
       with_items:
-        - { name: "docker-compose.yaml", dest: "{{ dest_path }}" }
+        - { name: "vault-compose-up.yaml", dest: "{{ dest_path }}" }
         - { name: "vault.json", dest: "{{ dest_path }}/volumes/config/" }
 
     - name: Log into DockerHub
