@@ -12,7 +12,7 @@
         group: deploy
         owner: deploy
 
-    - name: Copy all role files to target
+    - name: Copy all role files to '/var/www'
       copy:
         src: ./
         dest: "{{ dest_path }}"
